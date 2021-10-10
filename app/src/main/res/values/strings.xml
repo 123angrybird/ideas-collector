@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CustomApp</string>
+    <string name="project_title">Project</string>
+    <string name="project_add">Add</string>
+ </resources>

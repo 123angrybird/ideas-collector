@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/project_row"
+    android:background="@drawable/boader"
+    android:layout_marginBottom="10dp"
+    android:paddingHorizontal="2dp">
+
+        <TextView
+            android:id="@+id/project_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Text View"
+            android:textSize="20sp"
+            android:layout_gravity="center_vertical"/>
+
+        <Button
+            android:id="@+id/project_editButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            android:text="Edit"
+            android:textSize="20sp"/>
+
+
+</LinearLayout>
