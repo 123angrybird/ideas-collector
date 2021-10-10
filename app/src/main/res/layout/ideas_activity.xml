@@ -14,5 +14,15 @@
         layout="@layout/app_bar_ideas_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/ideas_nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/header_nav_ideas_layout"
+        app:menu="@menu/navigation_menu_ideas" />
+
+
 </androidx.drawerlayout.widget.DrawerLayout>

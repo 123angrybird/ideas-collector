@@ -1,10 +1,10 @@
 package com.example.customapp.objects
 
-class Draft() {
+class Draft {
     private var ideas = mutableListOf<Idea>()
 
-    fun add(idea: Idea){
-        ideas.add(idea)
+    fun add(name: String, text: String){
+        ideas.add(Idea(ideas.size, name, Idea.NONE , Idea.OWN_IDEA, text))
     }
 
     fun remove(position: Int){
@@ -12,6 +12,9 @@ class Draft() {
     }
 
     fun edit(position: Int, name: String, text: String){
-        ideas
+        ideas[position].apply {
+            this.name = name
+            this.text = text
+        }
     }
 }

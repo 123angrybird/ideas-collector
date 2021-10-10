@@ -4,13 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/boader.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_baseline_block.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_baseline_draft.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_baseline_internet.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/side_nav_bar.xml" value="0.26614583333333336" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_project.xml" value="0.17028985507246377" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/alert_layout.xml" value="0.17028985507246377" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/app_bar_ideas_layout.xml" value="0.2" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/fragment_add_new_project.xml" value="0.4" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/header_nav_ideas_layout.xml" value="0.4" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/ideas_activity.xml" value="0.176" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/project_row.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/menu/navigation_menu_ideas.xml" value="0.25" />
       </map>
     </option>
   </component>

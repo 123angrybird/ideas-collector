@@ -4,4 +4,7 @@
     <string name="project_add">Add</string>
     <string name="project_name">Project Name</string>
     <string name="empty_input">Input is empty</string>
+    <string name="block">Block</string>
+    <string name="draft">Draft</string>
+    <string name="internet">Internet</string>
  </resources>
