@@ -2,8 +2,6 @@ package com.example.customapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +12,7 @@ import com.example.customapp.objects.Project
 import com.example.customapp.adapter.ProjectAdapter
 import com.example.customapp.gesture.SwipeToDeleteProject
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputLayout
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,26 +45,42 @@ class MainActivity : AppCompatActivity() {
         ItemTouchHelper(item).attachToRecyclerView(projectList)
     }
 
-    private fun showDialog(action: String, position: Int){
+    private fun showDialog(action: String, position: Int) {
         val builder = AlertDialog.Builder(this)
         val view = layoutInflater.inflate(R.layout.add_edit_project, null)
-        val editText = view.findViewById<EditText>(R.id.add)
+        val editText = view.findViewById<EditText>(R.id.add_edit)
 
         val text = if (action == "Edit") data[position].name else ""
         editText.setText(text)
 
-        with(builder){
+        with(builder) {
             setTitle(action)
-            setPositiveButton("OK"){dialog, which ->
-                if (action == "Add") add(editText.text.toString(), position)
-                else edit(editText.text.toString(), position)
-            }
-            setNegativeButton("Cancel"){dialog, which ->
+            setPositiveButton("OK", null)
+            setNegativeButton("Cancel", null)
+            setView(view)
+        }
+
+        val dialog = builder.show()
+
+        dialog.apply {
+            getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                if (editText.text.isEmpty()) {
+                    view.findViewById<TextInputLayout>(R.id.add_edit_layout).let {
+                        it.error = resources.getString(R.string.empty_input)
+                        editText.focusable
+                    }
+                } else {
+                    if (action == "Add") add(editText.text.toString(), position)
+                    else edit(editText.text.toString(), position)
+                    dialog.dismiss()
+                }
             }
 
-            setView(view)
-            show()
+            getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener{
+                dialog.dismiss()
+            }
         }
+
     }
 
     private fun add(name: String, position: Int){
