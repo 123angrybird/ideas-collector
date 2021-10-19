@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.customapp.R
 import com.example.customapp.objects.Project
 
-class ProjectAdapter(private val data: List<Project>, private val listener: (String)->Unit, private val edit: (String, Int)->Unit): RecyclerView.Adapter<ProjectAdapter.ViewHolder>(){
+class ProjectAdapter(
+    private val data: List<Project>,
+    private val listener: (String, String)->Unit,
+    private val edit: (String, Int)->Unit): RecyclerView.Adapter<ProjectAdapter.ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).let {
@@ -28,7 +31,7 @@ class ProjectAdapter(private val data: List<Project>, private val listener: (Str
 
     override fun getItemCount() = data.size
 
-    inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view){
         private val name = view.findViewById<TextView>(R.id.project_name)
         private val edit = view.findViewById<Button>(R.id.project_editButton)
 
@@ -37,6 +40,9 @@ class ProjectAdapter(private val data: List<Project>, private val listener: (Str
 
             edit.setOnClickListener{
                 edit("Edit", position)
+            }
+            view.setOnClickListener{
+                listener(project.id, project.name)
             }
         }
 

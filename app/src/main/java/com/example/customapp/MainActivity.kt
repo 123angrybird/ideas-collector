@@ -1,7 +1,9 @@
 package com.example.customapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -13,19 +15,23 @@ import com.example.customapp.adapter.ProjectAdapter
 import com.example.customapp.gesture.SwipeToDeleteProject
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var adapter: ProjectAdapter
 
-    private var data = mutableListOf<Project>()
+    private lateinit var adapter: ProjectAdapter
+    private lateinit var data: MutableList<Project>
+    private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // project list
-        data = init()
+        init()
+
         val projectList = findViewById<RecyclerView>(R.id.project_list)
         adapter = ProjectAdapter(data, ::callIdeas, ::showDialog)
         projectList.adapter = adapter
@@ -49,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         val view = layoutInflater.inflate(R.layout.add_edit_project, null)
         val editText = view.findViewById<EditText>(R.id.add_edit)
+        editText.hint = getString(R.string.project_name)
 
         val text = if (action == "Edit") data[position].name else ""
         editText.setText(text)
@@ -64,13 +71,13 @@ class MainActivity : AppCompatActivity() {
 
         dialog.apply {
             getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                if (editText.text.isEmpty()) {
+                if (editText.text.isBlank()) {
                     view.findViewById<TextInputLayout>(R.id.add_edit_layout).let {
                         it.error = resources.getString(R.string.empty_input)
                         editText.focusable
                     }
                 } else {
-                    if (action == "Add") add(editText.text.toString(), position)
+                    if (action == "Add") add(editText.text.toString())
                     else edit(editText.text.toString(), position)
                     dialog.dismiss()
                 }
@@ -83,14 +90,42 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun add(name: String, position: Int){
-        data.add(Project(position, name))
-        adapter.notifyItemInserted(position)
+    private fun add(name: String){
+        val firebaseData = hashMapOf(
+            "name" to name
+        )
+
+        db.collection("projects")
+            .add(firebaseData)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Firebase Data", "DocumentSnapshot written with ID: ${documentReference.id}")
+                data.add(Project(documentReference.id, name))
+                adapter.notifyItemInserted(data.size)
+                Toast.makeText(this, "The project has been added", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firebase Data", "Error adding document", e)
+                Toast.makeText(this, "Unable to add the project", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun edit(name: String, position: Int){
-        data[position].name = name;
-        adapter.notifyDataSetChanged()
+        val firebaseData = hashMapOf(
+            "name" to name
+        )
+        db.collection("projects").document(data[position].id)
+            .set(firebaseData)
+            .addOnSuccessListener { documentReference ->
+                Log.d("Firebase Data", "DocumentSnapshot successfully written!")
+                Toast.makeText(this, "The project has been changed", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firebase Data", "Error adding document", e)
+                Toast.makeText(this, "Unable to change the project", Toast.LENGTH_SHORT).show()
+            }
+
+        data[position].name = name
+        adapter.notifyItemChanged(position)
     }
 
     //delete
@@ -101,11 +136,15 @@ class MainActivity : AppCompatActivity() {
 
         with(builder){
             setTitle("Delete")
-            textView.text = "Do you want to delete ${data[position].name}?"
-            setPositiveButton("Delete"){dialog, which ->
+            val message = "Do you want to delete \"${data[position].name}\"?"
+            textView.text = message
+            setPositiveButton("Delete"){ _, _ ->
                 deleteProject(position)
             }
-            setNegativeButton("Cancel"){dialog, which ->
+            setNegativeButton("Cancel"){ _, _ ->
+                adapter.notifyItemChanged(position)
+            }
+            setOnCancelListener {
                 adapter.notifyItemChanged(position)
             }
             setView(view)
@@ -115,24 +154,47 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun deleteProject(position: Int){
+        db.collection("projects").document(data[position].id)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("Firebase Data", "DocumentSnapshot successfully deleted!")
+                Toast.makeText(this, "The project has been deleted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Log.w("Firebase Data", "Error deleting document", e)
+                Toast.makeText(this, "Unable to delete the project", Toast.LENGTH_SHORT).show()
+            }
+
+
         data.removeAt(position)
         adapter.notifyItemRemoved(position)
     }
 
-    private fun callIdeas(a: String){
-        Toast.makeText(applicationContext, a, Toast.LENGTH_SHORT).show()
-        //todo : call Ideas Activity
+    private fun callIdeas(projectId: String, projectName: String){
+        //Toast.makeText(applicationContext, projecctId, Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, IdeasActivity::class.java)
+        intent.apply {
+            putExtra("Project id", projectId)
+            putExtra("Project name", projectName)
+        }
+
+        startActivity(intent)
     }
 
-    private fun init(): MutableList<Project>{
-        //todo: get data
-        var data = mutableListOf<Project>()
+    private fun init(){
+        data = mutableListOf()
 
-        data.add(Project(1, "IT security"))
-        data.add(Project(2, "Software development for mobile device"))
-        data.add(Project(3, "Computer System"))
-        data.add(Project(4,"Advance Web development"))
-
-        return data
+        db.collection("projects")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result){
+                    this.data.add(Project(document.id, document.data["name"] as String, ))
+                    adapter.notifyItemInserted(data.size)
+                }
+            }
+            .addOnFailureListener {
+                Log.e("Firebase Data", "Error getting documents $it")
+            }
     }
 }

@@ -19,4 +19,6 @@
     <color name="secondaryTextColor">#000000</color>
 
     <color name="alert">#f50057</color>
+    <color name="save">#d6d6d6</color>
+    <color name="dropdown_box">#ebebeb</color>
 </resources>

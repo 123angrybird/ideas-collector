@@ -1,16 +1,21 @@
 package com.example.customapp.objects
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 class Idea(
-    private val id: Int,
-    var name: String,
+    val bId: String,
+    val id: String,
+    var text: String,
     var type: Int = NONE,
     var option: Int = OWN_IDEA,
-    var text: String
-) {
+    var expand: Boolean = false
+): Parcelable {
 
     companion object {
         const val NONE = 0
-        const val FIRST_TOPIC_SENTENCE = 1
+        const val MAIN_TOPIC = 1
         const val SUB_TOPIC = 2
         const val EXPLAIN = 3
         const val ANALYZE = 4
@@ -19,5 +24,27 @@ class Idea(
         const val OWN_IDEA = 0
         const val PARAPHRASE = 1
         const val QUOTE = 2
+
+        fun convertTypeToString(value: Int): String{
+            return when(value){
+                1 -> "Main Topic"
+                2 -> "Subtopic"
+                3 -> "Explain"
+                4 -> "Analyze"
+                5 -> "Example"
+                else -> "None"
+            }
+        }
+
+        fun convertTypeToValue(type: String): Int{
+            return when (type){
+                "Main Topic"    -> 1
+                "Subtopic"      -> 2
+                "Explain"       -> 3
+                "Analyze"       -> 4
+                "Example"       -> 5
+                else    -> 0
+            }
+        }
     }
 }

@@ -39,11 +39,12 @@
                 android:id="@+id/add_project_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
 
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="13dp"
                 android:clickable="true"
-                android:src="@drawable/ic_baseline_add_24"
-                android:contentDescription="@string/project_add" />
+                android:contentDescription="@string/project_add"
+                android:src="@drawable/ic_baseline_add_24" />
 
         </RelativeLayout>
 </LinearLayout>

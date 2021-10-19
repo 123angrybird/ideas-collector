@@ -4,20 +4,44 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/boader.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/expand_animation.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/expand_background.xml" value="0.26614583333333336" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.26614583333333336" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_baseline_block.xml" value="0.26614583333333336" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_baseline_draft.xml" value="0.26614583333333336" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_baseline_internet.xml" value="0.26614583333333336" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26614583333333336" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/drawable/side_nav_bar.xml" value="0.26614583333333336" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_project.xml" value="0.17028985507246377" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_block_ideas_activity.xml" value="0.264" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_draft_activity.xml" value="0.264" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_ideas_block_activity.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_internet_idea_activity.xml" value="0.176" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_internet_ideas.xml" value="0.264" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_project.xml" value="0.4" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_source_activity.xml" value="0.16576086956521738" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/alert_layout.xml" value="0.17028985507246377" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/app_bar_ideas_layout.xml" value="0.2" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/block_ideas_activity.xml" value="0.264" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/block_ideas_row.xml" value="0.4" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/block_row.xml" value="0.16576086956521738" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/content_ideas.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/draft_fragment.xml" value="0.17028985507246377" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/draft_list_row.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/draft_row.xml" value="0.2357563850687623" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/empty_row.xml" value="0.16576086956521738" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/fragment_add_new_project.xml" value="0.4" />
-        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/header_nav_ideas_layout.xml" value="0.4" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/fragment_block.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/fragment_draft.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/fragment_source.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/header_nav_ideas_layout.xml" value="0.264" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/ideas_activity.xml" value="0.176" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/internet_ideas_acitvity.xml" value="0.4" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/internet_ideas_row.xml" value="0.3617269544924154" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/project_row.xml" value="0.25" />
-        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/menu/navigation_menu_ideas.xml" value="0.25" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/source_row.xml" value="0.264" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/testing.xml" value="0.264" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/menu/navigation_menu_ideas.xml" value="0.4" />
       </map>
     </option>
   </component>

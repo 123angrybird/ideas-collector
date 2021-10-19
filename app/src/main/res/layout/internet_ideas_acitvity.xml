@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/internet_ideas_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/purple_700"
+        android:gravity="top"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:text="@string/block_idea"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/empty_internet_ideas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="20dp"
+        android:visibility="visible"
+        android:text="@string/empty"
+        android:textStyle="bold"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="5dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/internet_ideas_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:layout_marginBottom="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/internet_ideas_add"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
