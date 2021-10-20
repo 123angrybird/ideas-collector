@@ -18,8 +18,9 @@ class Idea(
         const val MAIN_TOPIC = 1
         const val SUB_TOPIC = 2
         const val EXPLAIN = 3
-        const val ANALYZE = 4
-        const val EXAMPLE = 5
+        const val PROOF = 4
+        const val ANALYZE = 5
+        const val EXAMPLE = 6
 
         const val OWN_IDEA = 0
         const val PARAPHRASE = 1
@@ -30,8 +31,9 @@ class Idea(
                 1 -> "Main Topic"
                 2 -> "Subtopic"
                 3 -> "Explain"
-                4 -> "Analyze"
-                5 -> "Example"
+                4 -> "Proof"
+                5 -> "Analyze"
+                6 -> "Example"
                 else -> "None"
             }
         }
@@ -41,8 +43,9 @@ class Idea(
                 "Main Topic"    -> 1
                 "Subtopic"      -> 2
                 "Explain"       -> 3
-                "Analyze"       -> 4
-                "Example"       -> 5
+                "Proof"         -> 4
+                "Analyze"       -> 5
+                "Example"       -> 6
                 else    -> 0
             }
         }

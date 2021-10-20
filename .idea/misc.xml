@@ -18,8 +18,8 @@
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_ideas_block_activity.xml" value="0.25" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_internet_idea_activity.xml" value="0.176" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_internet_ideas.xml" value="0.264" />
-        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_project.xml" value="0.4" />
-        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_source_activity.xml" value="0.16576086956521738" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_project.xml" value="0.2" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/add_edit_source_activity.xml" value="0.264" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/alert_layout.xml" value="0.17028985507246377" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/app_bar_ideas_layout.xml" value="0.2" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/block_ideas_activity.xml" value="0.264" />
@@ -42,6 +42,7 @@
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/source_row.xml" value="0.264" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/layout/testing.xml" value="0.264" />
         <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/menu/navigation_menu_ideas.xml" value="0.4" />
+        <entry key="..\:/Mycode/Android_studio/CustomApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.26614583333333336" />
       </map>
     </option>
   </component>

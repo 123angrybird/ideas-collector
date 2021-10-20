@@ -26,14 +26,7 @@ class BlockIdeasAdapter(
         fun bind(item: Idea){
             val subText = if (item.text.length < 25) item.text
                                 else item.text.subSequence(0, 25).toString() + "..."
-            val typeText = when (item.type){
-                Idea.MAIN_TOPIC -> "Main topic"
-                Idea.SUB_TOPIC -> "Subtopic"
-                Idea.EXPLAIN -> "Explain"
-                Idea.EXAMPLE -> "Example"
-                Idea.ANALYZE -> "Analyze"
-                else -> "None"
-            } + "->"
+            val typeText = Idea.convertTypeToString(item.type) + "->"
 
 
             typeTV.text = typeText
