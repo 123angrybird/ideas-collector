@@ -1,5 +1,6 @@
 package com.example.customapp.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.OnReceiveContentListener
 import android.view.View
@@ -25,7 +26,8 @@ class ProjectAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item, position)
+        holder.bind(data[position], position)
+
     }
 
 
@@ -33,16 +35,16 @@ class ProjectAdapter(
 
     inner class ViewHolder(private val view: View): RecyclerView.ViewHolder(view){
         private val name = view.findViewById<TextView>(R.id.project_name)
-        private val edit = view.findViewById<Button>(R.id.project_editButton)
+        val edit = view.findViewById<Button>(R.id.project_editButton)
 
         fun bind(project: Project, position: Int){
             name.text = project.name
 
-            edit.setOnClickListener{
-                edit("Edit", position)
-            }
             view.setOnClickListener{
                 listener(project.id, project.name)
+            }
+            edit.setOnClickListener{
+                edit("Edit", position)
             }
         }
 

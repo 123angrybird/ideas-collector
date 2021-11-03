@@ -78,12 +78,12 @@ class BlockFragment : Fragment() {
         }
 
         //swipe to delete item
-        val item = object : SwipeToDeleteBlock(this, 0, ItemTouchHelper.RIGHT){
+        val item1 = object : SwipeToDeleteBlock(this, 0, ItemTouchHelper.RIGHT){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 showAlert(viewHolder.adapterPosition, view.context)
             }
         }
-        ItemTouchHelper(item).attachToRecyclerView(blockList)
+        ItemTouchHelper(item1).attachToRecyclerView(blockList)
         return view
     }
 
@@ -209,7 +209,7 @@ class BlockFragment : Fragment() {
 
 
         data.removeAt(position)
-        adapter.notifyItemRemoved(position)
+        adapter.notifyDataSetChanged()
         emptyList()
     }
 

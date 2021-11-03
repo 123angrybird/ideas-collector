@@ -77,7 +77,7 @@ class BlockIdeas: AppCompatActivity() {
                             document.data["type"].toString().toInt(),
                             document.data["option"].toString().toInt(),
                         ))
-                    adapter.notifyItemInserted(data.size)
+                    adapter.notifyItemInserted(data.size-1)
                 }
                 emptyList()
             }
@@ -161,12 +161,12 @@ class BlockIdeas: AppCompatActivity() {
                                 Toast.makeText(this, "Unable to delete the idea", Toast.LENGTH_SHORT).show()
                             }
                         data.removeAt(location)
-                        adapter.notifyItemRemoved(location)
+                        adapter.notifyDataSetChanged()
                         emptyList()
                         Toast.makeText(this, "The idea has been deleted", Toast.LENGTH_SHORT).show()
                     }
                 }
-                blockIdeasList.scrollToPosition(location)
+
             }
         }
     }
@@ -202,7 +202,7 @@ class BlockIdeas: AppCompatActivity() {
                     val text = if (option == Idea.QUOTE) document.data["text"].toString() else document.data["paraphrase"].toString()
                     data.add(
                         SpinnerReference(
-                            "internetideas",
+                            "source",
                             document.data["name"].toString(),
                             text,
                             option))

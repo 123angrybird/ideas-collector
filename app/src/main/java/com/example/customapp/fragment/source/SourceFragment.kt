@@ -1,6 +1,7 @@
 package com.example.customapp.fragment.source
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 import com.example.customapp.R
@@ -104,72 +106,80 @@ class SourceFragment : Fragment() {
         startActivity(intent)
     }
 
-    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        when (it.resultCode){
-            Activity.RESULT_OK -> {
-                val result = it.data
-                val action = result?.getStringExtra("action")
-                val itemResult = result?.getParcelableExtra<Source>("item")
+    private lateinit var getResult: ActivityResultLauncher<Intent>
 
-                when (action){
-                    "add" ->{
-                        val item = itemResult!!
-                        val a = hashMapOf(
-                            "pid" to projectId,
-                            "title" to item.title,
-                            "author" to item.author,
-                            "year" to item.year,
-                            "date" to FieldValue.serverTimestamp()
-                        )
-                        db.collection("sources")
-                            .add(a)
-                            .addOnSuccessListener { it1 ->
-                                data.add(Source(projectId!!, it1.id, item.title, item.author, item.year))
-                                adapter.notifyItemInserted(location)
-                                emptyList()
-                                Toast.makeText(this.context, "The source has been added", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this.context, "Unable to add the source", Toast.LENGTH_SHORT).show()
-                            }
-                    }
-                    "edit" ->{
-                        val item = itemResult!!
-                        val a = db.collection("sources").document(data[location].id)
-                        a.apply {
-                            update("title", item.title)
-                            update("author", item.author)
-                            update("year", item.year)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            when (it.resultCode){
+                Activity.RESULT_OK -> {
+                    val result = it.data
+                    val action = result?.getStringExtra("action")
+                    val itemResult = result?.getParcelableExtra<Source>("item")
+
+                    when (action){
+                        "add" ->{
+                            val item = itemResult!!
+                            val a = hashMapOf(
+                                "pid" to projectId,
+                                "title" to item.title,
+                                "author" to item.author,
+                                "year" to item.year,
+                                "date" to FieldValue.serverTimestamp()
+                            )
+                            db.collection("sources")
+                                .add(a)
+                                .addOnSuccessListener { it1 ->
+                                    data.add(Source(projectId!!, it1.id, item.title, item.author, item.year))
+                                    adapter.notifyItemInserted(location)
+                                    emptyList()
+                                    Toast.makeText(this.context, "The source has been added", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this.context, "Unable to add the source", Toast.LENGTH_SHORT).show()
+                                }
                         }
+                        "edit" ->{
+                            val item = itemResult!!
+                            val a = db.collection("sources").document(data[location].id)
+                            a.apply {
+                                update("title", item.title)
+                                update("author", item.author)
+                                update("year", item.year)
+                            }
 
-                        data[location].apply {
-                            this.title = item.title
-                            this.author = item.author
-                            this.year = item.year
+                            data[location].apply {
+                                this.title = item.title
+                                this.author = item.author
+                                this.year = item.year
+                            }
+
+                            adapter.notifyItemChanged(location)
+                            Toast.makeText(this.context, "The source has been changed", Toast.LENGTH_SHORT).show()
                         }
+                        "delete" ->{
+                            db.collection("sources").document(data[location].id)
+                                .delete()
+                                .addOnSuccessListener {
+                                    Toast.makeText(this.context, "The source has been deleted", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this.context, "Unable to delete the source", Toast.LENGTH_SHORT).show()
+                                }
+                            data.removeAt(location)
+                            adapter.notifyDataSetChanged()
+                            emptyList()
 
-                        adapter.notifyItemChanged(location)
-                        Toast.makeText(this.context, "The source has been changed", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                    "delete" ->{
-                        db.collection("sources").document(data[location].id)
-                            .delete()
-                            .addOnSuccessListener {
-                                Toast.makeText(this.context, "The source has been deleted", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this.context, "Unable to delete the source", Toast.LENGTH_SHORT).show()
-                            }
-                        data.removeAt(location)
-                        adapter.notifyItemRemoved(location)
-                        emptyList()
 
-                    }
                 }
-                sourceList.scrollToPosition(location)
             }
         }
+
     }
+
 
     private fun emptyList(){
         empty.visibility = if (data.isEmpty())  View.VISIBLE else View.GONE

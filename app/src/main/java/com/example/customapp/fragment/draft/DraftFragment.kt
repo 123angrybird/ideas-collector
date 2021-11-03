@@ -1,13 +1,16 @@
 package com.example.customapp.fragment.draft
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -73,6 +76,7 @@ class DraftFragment : Fragment() {
             putExtra("action", "edit")
             putExtra("item", item)
         }
+
         getResult.launch(intentToAddOrEdit)
     }
 
@@ -85,60 +89,66 @@ class DraftFragment : Fragment() {
         getResult.launch(intentToAddOrEdit)
     }
 
-    private val getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        when (it.resultCode){
-            RESULT_OK -> {
-                val result = it.data
-                val action = result?.getStringExtra("action")
-                val name = result?.getStringExtra("name")
-                val text = result?.getStringExtra("text")
+    private lateinit var getResult: ActivityResultLauncher<Intent>
 
-                when (action){
-                    "add" ->{
-                        val a = hashMapOf(
-                            "pid" to projectId,
-                            "name" to name,
-                            "text" to text,
-                            "date" to FieldValue.serverTimestamp()
-                        )
-                        db.collection("drafts")
-                            .add(a)
-                            .addOnSuccessListener { it1 ->
-                                data.add(Draft(projectId!!, it1.id, name!!, text!!))
-                                adapter.notifyItemInserted(location)
-                                emptyList()
-                                Toast.makeText(this.context, "The draft has been added", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this.context, "Unable to delete the draft", Toast.LENGTH_SHORT).show()
-                            }
-                    }
-                    "edit" ->{
-                        val a = db.collection("drafts").document(data[location].id)
-                        a.update("name", name)
-                        a.update("text", text)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            when (it.resultCode){
 
-                        data[location].name = name.toString()
-                        data[location].text = text.toString()
+                RESULT_OK -> {
+                    val result = it.data
+                    val action = result?.getStringExtra("action")
+                    val name = result?.getStringExtra("name")
+                    val text = result?.getStringExtra("text")
 
-                        adapter.notifyItemChanged(location)
-                        Toast.makeText(this.context, "The draft has been changed", Toast.LENGTH_SHORT).show()
+                    when (action){
+                        "add" ->{
+                            val a = hashMapOf(
+                                "pid" to projectId,
+                                "name" to name,
+                                "text" to text,
+                                "date" to FieldValue.serverTimestamp()
+                            )
+                            db.collection("drafts")
+                                .add(a)
+                                .addOnSuccessListener { it1 ->
+                                    data.add(Draft(projectId!!, it1.id, name!!, text!!))
+                                    adapter.notifyItemInserted(location)
+                                    emptyList()
+                                    Toast.makeText(this.context, "The draft has been added", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this.context, "Unable to delete the draft", Toast.LENGTH_SHORT).show()
+                                }
+                        }
+                        "edit" ->{
+                            val a = db.collection("drafts").document(data[location].id)
+                            a.update("name", name)
+                            a.update("text", text)
+                            Log.i("Get result", "result in: name - $name, text - $text")
+                            data[location].name = name.toString()
+                            data[location].text = text.toString()
+
+                            adapter.notifyItemChanged(location)
+                            Toast.makeText(this.context, "The draft has been changed", Toast.LENGTH_SHORT).show()
+                        }
+                        "delete" ->{
+                            db.collection("drafts").document(data[location].id)
+                                .delete()
+                                .addOnSuccessListener {
+                                    Toast.makeText(this.context, "The draft has been deleted", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this.context, "Unable to delete the draft", Toast.LENGTH_SHORT).show()
+                                }
+                            data.removeAt(location)
+                            adapter.notifyDataSetChanged()
+                            emptyList()
+                        }
                     }
-                    "delete" ->{
-                        db.collection("drafts").document(data[location].id)
-                            .delete()
-                            .addOnSuccessListener {
-                                Toast.makeText(this.context, "The draft has been deleted", Toast.LENGTH_SHORT).show()
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(this.context, "Unable to delete the draft", Toast.LENGTH_SHORT).show()
-                            }
-                        data.removeAt(location)
-                        adapter.notifyItemRemoved(location)
-                        emptyList()
-                    }
+
                 }
-                draftList.scrollToPosition(location)
             }
         }
     }

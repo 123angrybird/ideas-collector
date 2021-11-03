@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: ProjectAdapter
     private lateinit var data: MutableList<Project>
     private val db = Firebase.firestore
+    private lateinit var projectList: RecyclerView
+    private lateinit var item: SwipeToDeleteProject
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +34,6 @@ class MainActivity : AppCompatActivity() {
         // project list
         init()
 
-        val projectList = findViewById<RecyclerView>(R.id.project_list)
-        adapter = ProjectAdapter(data, ::callIdeas, ::showDialog)
-        projectList.adapter = adapter
 
         // Add new project item
         val fab = findViewById<FloatingActionButton>(R.id.add_project_item)
@@ -43,12 +42,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         //swipe to delete item
-        val item = object : SwipeToDeleteProject(this, 0, ItemTouchHelper.RIGHT){
+        item = object : SwipeToDeleteProject(this, 0, ItemTouchHelper.RIGHT){
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 showAlert(viewHolder.adapterPosition)
             }
         }
-        ItemTouchHelper(item).attachToRecyclerView(projectList)
     }
 
     private fun showDialog(action: String, position: Int) {
@@ -100,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { documentReference ->
                 Log.d("Firebase Data", "DocumentSnapshot written with ID: ${documentReference.id}")
                 data.add(Project(documentReference.id, name))
-                adapter.notifyItemInserted(data.size)
+                adapter.notifyItemInserted(data.size-1)
                 Toast.makeText(this, "The project has been added", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
@@ -167,12 +165,10 @@ class MainActivity : AppCompatActivity() {
 
 
         data.removeAt(position)
-        adapter.notifyItemRemoved(position)
+        adapter.notifyDataSetChanged()
     }
 
     private fun callIdeas(projectId: String, projectName: String){
-        //Toast.makeText(applicationContext, projecctId, Toast.LENGTH_SHORT).show()
-
         val intent = Intent(this, IdeasActivity::class.java)
         intent.apply {
             putExtra("Project id", projectId)
@@ -190,7 +186,10 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result){
                     this.data.add(Project(document.id, document.data["name"] as String, ))
-                    adapter.notifyItemInserted(data.size)
+                    projectList = findViewById(R.id.project_list)
+                    adapter = ProjectAdapter(data, ::callIdeas, ::showDialog)
+                    projectList.adapter = adapter
+                    ItemTouchHelper(item).attachToRecyclerView(projectList)
                 }
             }
             .addOnFailureListener {

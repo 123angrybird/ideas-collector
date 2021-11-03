@@ -38,7 +38,8 @@ class AddEditIdeas:AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         val str = arrayListOf<String>()
         for (i in reference!!){
-            str.add(i.name)
+            val j = if (i.name == "None") "None" else i.what + ": " + i.name
+            str.add(j)
         }
         val ad: ArrayAdapter<*> = ArrayAdapter<Any?>(
             this,

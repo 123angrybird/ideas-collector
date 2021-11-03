@@ -179,11 +179,11 @@ class InternetIdeas: AppCompatActivity() {
                                 Toast.makeText(this, "Unable to delete the idea", Toast.LENGTH_SHORT).show()
                             }
                         data.removeAt(location)
-                        adapter.notifyItemRemoved(location)
+                        adapter.notifyDataSetChanged()
                         emptyList()
                     }
                 }
-                internetIdeasList.scrollToPosition(location)
+
             }
         }
     }

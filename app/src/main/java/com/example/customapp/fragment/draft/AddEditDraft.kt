@@ -99,4 +99,8 @@ class AddEditDraft: AppCompatActivity() {
         }
         setResult(Activity.RESULT_OK, i)
     }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+    }
 }
