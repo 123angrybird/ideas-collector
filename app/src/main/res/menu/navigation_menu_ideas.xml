@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior= "single">
+        <item
+            android:id="@+id/block"
+            android:icon="@drawable/ic_baseline_block"
+            android:title="@string/block" />
+        <item
+            android:id="@+id/draft"
+            android:icon="@drawable/ic_baseline_draft"
+            android:title="@string/draft" />
+        <item
+            android:id="@+id/source"
+            android:icon="@drawable/ic_baseline_internet"
+            android:title="@string/source" />
+    </group>
+
+    <!--TODO: In construction-->
+<!--    <group>-->
+<!--        <item android:title="Share">-->
+<!--            <menu>-->
+<!--                <item-->
+<!--                    android:id="@+id/share"-->
+<!--                    android:icon="@drawable/ic_baseline_share_24"-->
+<!--                    android:title="@string/share"/>-->
+<!--            </menu>-->
+<!--        </item>-->
+<!--    </group>-->
+</menu>
